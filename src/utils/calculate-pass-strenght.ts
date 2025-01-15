@@ -1,18 +1,18 @@
 import { ScoreRangeT } from "@/types";
-export const calculatePassStrength = (
-  pass: string,
-  checks: boolean[],
-): ScoreRangeT => {
-  let score = 0;
-  score += checks.length;
 
-  if (pass.length <= 5) {
-    score = 1;
-  } else if (pass.length < 10) {
-    score = Math.max(score - 1, 1);
+export const calculatePasswordStrength = (
+  password: string,
+  criteriaChecks: boolean[],
+): ScoreRangeT => {
+  let strengthScore = criteriaChecks.length;
+
+  if (password.length <= 5) {
+    strengthScore = 1;
+  } else if (password.length < 10) {
+    strengthScore = Math.max(strengthScore - 1, 1);
   }
 
-  score = Math.min(Math.max(score, 1), 5);
+  strengthScore = Math.min(Math.max(strengthScore, 1), 5);
 
-  return score as ScoreRangeT;
+  return strengthScore as ScoreRangeT;
 };

@@ -1,35 +1,39 @@
 import { CheckboxesStateT } from "@/types";
+import {
+  UPPERCASE_LETTERS,
+  LOWERCASE_LETTERS,
+  NUMBERS,
+  SPECIAL_CHARACTERS,
+} from "./consts";
 
 export const handleGeneratePass = (
   e: React.FormEvent<HTMLFormElement>,
-  passLength: number,
+  passwordLenght: number,
   checkboxes: CheckboxesStateT,
-) => {
+): { generatedPassword: string; error: string } => {
   e.preventDefault();
 
-  let error = "";
+  let generatedPassword = "";
 
-  if (passLength === 0) {
-    return { pass: "", error: "Please select password length" };
+  if (passwordLenght === 0) {
+    return { generatedPassword, error: "Please select password length" };
   }
 
   const positiveChecks = Object.values(checkboxes).filter((value) => value);
   if (positiveChecks.length === 0) {
-    error = "Please select at list one checkbox";
-    return { pass: "", error };
+    return { generatedPassword, error: "Please select at list one checkbox" };
   }
 
-  let selection = "";
-  if (checkboxes.uppercase) selection += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  if (checkboxes.lowercase) selection += "abcdefghijklmnopqrstuvwxyz";
-  if (checkboxes.numbers) selection += "0123456789";
-  if (checkboxes.symbols) selection += "!@#$%^&*()";
+  let characterSet = "";
+  if (checkboxes.uppercase) characterSet += UPPERCASE_LETTERS;
+  if (checkboxes.lowercase) characterSet += LOWERCASE_LETTERS;
+  if (checkboxes.numbers) characterSet += NUMBERS;
+  if (checkboxes.symbols) characterSet += SPECIAL_CHARACTERS;
 
-  let pass = "";
-
-  for (let i = 0; i < passLength; i++) {
-    pass += selection[Math.floor(Math.random() * selection.length)];
+  for (let i = 0; i < passwordLenght; i++) {
+    generatedPassword +=
+      characterSet[Math.floor(Math.random() * characterSet.length)];
   }
 
-  return { pass, error };
+  return { generatedPassword, error: "" };
 };

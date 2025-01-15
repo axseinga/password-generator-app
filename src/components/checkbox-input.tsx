@@ -2,23 +2,18 @@ import { CheckboxesStateT } from "@/types";
 
 type CheckboxInputProps = {
   label: string;
-  id: string;
+  id: keyof CheckboxesStateT;
   isChecked: boolean;
-  setCheckbox: React.Dispatch<React.SetStateAction<CheckboxesStateT>>;
+  handleCheckboxChange: (id: keyof CheckboxesStateT, value: boolean) => void;
 };
 
 export const CheckboxInput = ({
   label,
   id,
   isChecked,
-  setCheckbox,
+  handleCheckboxChange,
 }: CheckboxInputProps) => {
-  const handleChange = (value: boolean) => {
-    setCheckbox((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-  };
+
   return (
     <div>
       <label htmlFor={id}>{label}</label>
@@ -27,7 +22,7 @@ export const CheckboxInput = ({
         id={id}
         name={id}
         checked={isChecked}
-        onChange={() => handleChange(!isChecked)}
+        onChange={() => handleCheckboxChange(id, !isChecked)}
       />
     </div>
   );
