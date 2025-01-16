@@ -5,9 +5,9 @@ export default {
     extend: {
       colors: {
         customRed: "#F64A4A",
-        customGreen: "#F64A4A",
-        customYellow: "#F64A4A",
-        customOrange: "#F64A4A",
+        customGreen: "#A4FFAF",
+        customYellow: "#F8CD65",
+        customOrange: "#FB7C58",
         customBlack: "#18171F",
         customDarkGrey: "#24232C",
         customLightGrey: "#E6E5EA",
@@ -15,7 +15,9 @@ export default {
 
       },
       fontSize: {
-        "body": ["1.125rem", "1.438rem"],
+        "body-xxs": ["0.8rem", "1rem"],
+        "body-xs": ["1rem", "1.238rem"],
+        "body-s": ["1.125rem", "1.438rem"],
         "heading-m": ["1.5rem", "1.938rem"],
         "heading-l": ["2.125", "2.688"],
       },
