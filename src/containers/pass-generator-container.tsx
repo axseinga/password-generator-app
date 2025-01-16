@@ -60,7 +60,9 @@ export const GeneratePasswordContainer = () => {
     const score = calculatePasswordStrength(generatedPassword, positiveChecks);
     setPassError(error);
     setPassword(generatedPassword);
-    setStrength(score);
+    if (generatedPassword) {
+      setStrength(score);
+    }
   };
 
   return (
@@ -70,17 +72,23 @@ export const GeneratePasswordContainer = () => {
       </h1>
       <div className="flex h-[4rem] w-full items-center justify-between bg-customDarkGrey p-4 sm:mt-6 sm:h-[5rem] sm:p-8">
         <p
-          className={`text-heading-m font-normal ${password === "" && "opacity-25"} sm:text-heading-l`}
+          className={`text-body-s font-normal ${password === "" && "opacity-25"} sm:text-heading-m`}
         >
           {password === "" ? "P4$5W0rD!" : password}
         </p>
-        <div className="flex items-center gap-2">
-          <p aria-live="polite"> {showCopiedConfirmation && "Copied!"}</p>
+        <div className="flex -translate-y-2 transform flex-col justify-end gap-2 sm:-translate-x-0 sm:flex-row sm:items-center">
+          <p aria-live="polite" className="text-body-xxs sm:text-body-s h-2">
+            {" "}
+            {showCopiedConfirmation && "Copied!"}
+          </p>
           <button
             onClick={() => {
+              if (password === "") return;
               handleCopyItem(password);
               setShowCopiedConfirmation(true);
             }}
+            className="flex justify-end sm:justify-center disabled:cursor-not-allowed"
+            disabled={password === "" ? true : false}
           >
             <IconCopy />
           </button>
