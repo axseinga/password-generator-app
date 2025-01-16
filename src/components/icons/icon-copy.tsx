@@ -9,7 +9,7 @@ export const IconCopy = ({ color = "#A4FFAF", title }: IconProps) => {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 21 24"
-        className="h-[18px] w-[20px] transition-all duration-300 sm:h-[24] sm:w-[21]"
+        className="h-[18px] w-[20px] transition-all duration-300 sm:h-[24px] sm:w-[21px]"
       >
         {title && <title>{title}</title>}
         <path

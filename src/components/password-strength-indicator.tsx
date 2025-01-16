@@ -29,7 +29,7 @@ export const PasswordStrengthIndicator = ({
       <div
         aria-live="polite"
         id="password-strength"
-        className="flex items-center gap-2"
+        className="flex items-center gap-2 sm:text-heading-m"
       >
         {strength
           ? PASSWORD_STRENGTH_LABELS[
@@ -39,7 +39,7 @@ export const PasswordStrengthIndicator = ({
         {Array.from({ length: 4 }).map((_, index) => (
           <div
             key={`${index}_strength`}
-            className={`h-[28px] w-[10px] ${index < strength && getColor(strength)} ${index >= strength && "border-2 border-customLightGrey"}`}
+            className={`h-[28px] w-[10px] ${index < strength && getColor(strength)} ${index >= strength && "border-2 border-customLightGrey"} transition-all`}
           />
         ))}
       </div>

@@ -8,13 +8,15 @@ import { handleGeneratePass } from "@/utils/generate-password";
 import { CHECKBOX_CONFIG } from "@/utils/consts";
 import { handleCopyItem } from "@/utils/handle-copy-item";
 import { PasswordStrengthIndicator } from "@/components/password-strength-indicator";
-import { IconArrowRight } from "@/components/icons/icon-arrow-right";
+import { Button } from "@/components/button";
+import { PassLenghtSlider } from "@/components/pass-lenght-slider";
 
 export const GeneratePasswordContainer = () => {
   const [password, setPassword] = useState<string>("");
   const [passLength, setPassLength] = useState<number>(10);
   const [strength, setStrength] = useState<ScoreRangeT>(0);
   const [passError, setPassError] = useState("");
+  const [showCopiedConfirmation, setShowCopiedConfirmation] = useState(false);
   const [checkboxes, setCheckboxes] = useState<CheckboxesStateT>({
     uppercase: false,
     lowercase: false,
@@ -28,6 +30,15 @@ export const GeneratePasswordContainer = () => {
       setPassError("");
     }
   }, [checkboxes]);
+
+  useEffect(() => {
+    if (showCopiedConfirmation) {
+      const timeout = setTimeout(() => {
+        setShowCopiedConfirmation(false);
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [showCopiedConfirmation]);
 
   const handleCheckboxChange = (id: keyof CheckboxesStateT, value: boolean) => {
     setCheckboxes((prev) => ({ ...prev, [id]: value }));
@@ -53,43 +64,38 @@ export const GeneratePasswordContainer = () => {
   };
 
   return (
-    <div className="flex min-w-[21.438rem] flex-col items-stretch gap-4 font-bold">
-      <h1 className="text-body-xs text-center text-customGreyBlue">
+    <div className="flex w-full max-w-[21.438rem] flex-col items-stretch gap-4 px-4 font-bold sm:mt-[1rem] sm:max-w-[36rem] md:mt-[6rem]">
+      <h1 className="text-body-xs text-center text-customGreyBlue sm:text-heading-m">
         Password Generator
       </h1>
-      <div className="flex h-[4rem] w-full items-center justify-between bg-customDarkGrey p-4">
+      <div className="flex h-[4rem] w-full items-center justify-between bg-customDarkGrey p-4 sm:mt-6 sm:h-[5rem] sm:p-8">
         <p
-          className={`text-heading-m font-normal ${password === "" && "opacity-25"}`}
+          className={`text-heading-m font-normal ${password === "" && "opacity-25"} sm:text-heading-l`}
         >
           {password === "" ? "P4$5W0rD!" : password}
         </p>
-        <button onClick={() => handleCopyItem(password)}>
-          <IconCopy />
-        </button>
+        <div className="flex items-center gap-2">
+          <p aria-live="polite"> {showCopiedConfirmation && "Copied!"}</p>
+          <button
+            onClick={() => {
+              handleCopyItem(password);
+              setShowCopiedConfirmation(true);
+            }}
+          >
+            <IconCopy />
+          </button>
+        </div>
       </div>
       <form
         noValidate
         onSubmit={handleGeneratePassword}
-        className="flex w-full flex-col items-center justify-between gap-5 bg-customDarkGrey px-4 pb-4 pt-5"
+        className="flex w-full flex-col items-center justify-between gap-5 bg-customDarkGrey px-4 pb-4 pt-5 sm:px-8 sm:pb-10 sm:pt-7"
       >
-        <div className="flex w-full items-center justify-between">
-          <label htmlFor="passLenghtInput">Character Length</label>
-          <p className="text-customGreen text-heading-m">{passLength}</p>
-        </div>
-        <input
-          type="range"
-          min="0"
-          max="20"
-          id="passLenghtInput"
-          step="1"
-          value={passLength}
-          onChange={handlePasswordLengthChange}
-          className="h-2 w-full cursor-pointer appearance-none bg-transparent accent-customLightGrey [&::-webkit-slider-thumb]:h-[28px] [&::-webkit-slider-thumb]:w-[28px] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-customLightGrey"
-          style={{
-            background: `linear-gradient(to right, #A4FFAF ${(passLength / 20) * 100}%, #24232C ${(passLength / 20) * 100}%)`,
-          }}
+        <PassLenghtSlider
+          passLength={passLength}
+          handlePasswordLengthChange={handlePasswordLengthChange}
         />
-        <fieldset className="flex w-full flex-col gap-3 py-3">
+        <fieldset className="flex w-full flex-col gap-3 py-3 sm:mt-2 sm:gap-5">
           {CHECKBOX_CONFIG.map(({ id, label }, index) => (
             <CheckboxInput
               key={`${index}-${id}`}
@@ -100,22 +106,21 @@ export const GeneratePasswordContainer = () => {
             />
           ))}
         </fieldset>
-        <div className="flex h-[3.625rem] w-full items-center justify-center bg-customBlack px-4">
-          {passError ? (
-            <p aria-live="polite" className="text-body-xxs text-center text-customRed">
-              {passError}
-            </p>
-          ) : (
-            <PasswordStrengthIndicator strength={strength} />
-          )}
+        <div className="flex w-full flex-col gap-4 sm:gap-8">
+          <div className="sm:text-body-s flex h-[3.625rem] w-full items-center justify-center bg-customBlack px-4 sm:h-[4.5rem]">
+            {passError ? (
+              <p
+                aria-live="polite"
+                className="text-body-xxs text-center text-customRed"
+              >
+                {passError}
+              </p>
+            ) : (
+              <PasswordStrengthIndicator strength={strength} />
+            )}
+          </div>
+          <Button type="submit" label="Generate" hasIcon />
         </div>
-        <button
-          type="submit"
-          className="flex h-[3.625rem] w-full items-center justify-center gap-4 bg-customGreen uppercase text-customDarkGrey"
-        >
-          <p>Generate</p>
-          <IconArrowRight />
-        </button>
       </form>
     </div>
   );

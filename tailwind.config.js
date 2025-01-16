@@ -19,7 +19,7 @@ export default {
         "body-xs": ["1rem", "1.238rem"],
         "body-s": ["1.125rem", "1.438rem"],
         "heading-m": ["1.5rem", "1.938rem"],
-        "heading-l": ["2.125", "2.688"],
+        "heading-l": ["2.125rem", "2.688rem"],
       },
       fontFamily: {
         jetBrains: "JetBrains Mono, monospace",

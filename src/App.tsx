@@ -2,7 +2,7 @@ import { GeneratePasswordContainer } from "@/containers/pass-generator-container
 
 const App = () => {
   return (
-    <main className="relative flex items-center justify-center font-jetBrains text-customLightGrey bg-customBlack h-screen">
+    <main className="flex h-screen items-center justify-center bg-customBlack font-jetBrains text-customLightGrey">
       <GeneratePasswordContainer />
     </main>
   );
