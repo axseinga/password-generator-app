@@ -66,7 +66,7 @@ export const GeneratePasswordContainer = () => {
   };
 
   return (
-    <div className="flex w-full max-w-[21.438rem] flex-col items-stretch gap-4 px-4 font-bold sm:mt-[1rem] sm:max-w-[36rem] md:mt-[6rem]">
+    <div className="flex w-full max-w-[21.438rem] flex-col items-stretch gap-4 px-4 font-bold sm:mt-[1rem] sm:max-w-[36rem]">
       <h1 className="text-body-xs text-center text-customGreyBlue sm:text-heading-m">
         Password Generator
       </h1>
